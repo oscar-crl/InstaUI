@@ -17,8 +17,12 @@ class AppConfig: ObservableObject {
     
     //MARK:- Global state app config
     @Published var uiImproved: Bool
+    @Published var tags: [String]
+    @Published var tagsIndex: Int
     
     init() {
         uiImproved = true
+        tags = ["abstract", "wallpaper", "macro"]
+        tagsIndex = 0
     }
 }

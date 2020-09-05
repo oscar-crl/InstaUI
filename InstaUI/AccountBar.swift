@@ -30,7 +30,7 @@ struct AccountBar: View {
                 .frame(width: 40, height: 40).opacity(0.2)
                 .cornerRadius(40)
             }
-            Text(item.account_url).font(.subheadline)
+            Text(item.account_url != nil ? item.account_url! : "Nobody").font(.subheadline)
             Spacer()
         }.padding(.leading, 10)
     }

@@ -26,12 +26,14 @@ struct DataEntry: Decodable {
 struct ItemsEntry: Decodable, Identifiable {
     var id: String
     var title: String
-    var account_url: String
+    var account_url: String? = nil
     var points: Int
     var views: Int
     var ups: Int
     var comment_count: Int
-    var images: [ImagesEntry]?
+    var type: Type? = nil
+    var link: URL? = nil
+    var images: [ImagesEntry]? = nil
 }
 
 struct ImagesEntry: Decodable, Identifiable {

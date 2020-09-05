@@ -19,6 +19,13 @@ struct SettingsView: View {
                     Text("Improve UI")
                 }
             }
+            Section(header: Text("Display")) {
+                Picker(selection: self.$stateAppConfig.tagsIndex, label: Text("Select tag")) {
+                    ForEach(0 ..< self.stateAppConfig.tags.count) {
+                        Text(self.stateAppConfig.tags[$0])
+                    }
+                }.pickerStyle(SegmentedPickerStyle())
+            }
         }.navigationBarTitle("Settings", displayMode: .inline)
     }
 }

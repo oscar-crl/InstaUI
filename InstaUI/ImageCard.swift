@@ -21,9 +21,9 @@ struct ImageCard: View {
     var imgItem: ItemsEntry
     
     init(item: ItemsEntry) {
-        imgCardController = ImageCardController(url: item.images![0].link)
+        imgCardController = item.type != nil ? ImageCardController(url: item.link!) : ImageCardController(url: item.images![0].link)
         imgItem = item
-        accountDetail = AccountDetailsController(accountUrl: item.account_url)
+        accountDetail = item.account_url != nil ? AccountDetailsController(accountUrl: item.account_url!) : AccountDetailsController(accountUrl: appConfig.username)
     }
     
     @State var startPoint = UnitPoint(x: 0, y: 0)
