@@ -10,19 +10,19 @@ import SwiftUI
 
 struct SettingsView: View {
     
-    @ObservedObject var stateAppConfig = appConfig
+    @ObservedObject var appState = app
     
     var body: some View {
         Form {
             Section(header: Text("Visual Effects")) {
-                Toggle(isOn: self.$stateAppConfig.uiImproved) {
+                Toggle(isOn: self.$appState.uiImproved) {
                     Text("Improve UI")
                 }
             }
             Section(header: Text("Display")) {
-                Picker(selection: self.$stateAppConfig.tagsIndex, label: Text("Select tag")) {
-                    ForEach(0 ..< self.stateAppConfig.tags.count) {
-                        Text(self.stateAppConfig.tags[$0])
+                Picker(selection: self.$appState.tagsIndex, label: Text("Select tag")) {
+                    ForEach(0 ..< self.appState.tags.count) {
+                        Text(self.appState.tags[$0])
                     }
                 }.pickerStyle(SegmentedPickerStyle())
             }

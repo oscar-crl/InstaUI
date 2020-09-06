@@ -12,11 +12,11 @@ struct AccountBar: View {
     
     @ObservedObject var imgCardController: ImageCardController
     
-    var item: ItemsEntry
+    var photoItem: PhotoModel
     
-    init(item: ItemsEntry, accountDetail: AccountData) {
-        imgCardController = ImageCardController(url: accountDetail.avatar!)
-        self.item = item
+    init(item: PhotoModel) {
+        imgCardController = ImageCardController(url: item.user.profile_image.large!)
+        self.photoItem = item
     }
     
     var body: some View {
@@ -30,7 +30,10 @@ struct AccountBar: View {
                 .frame(width: 40, height: 40).opacity(0.2)
                 .cornerRadius(40)
             }
-            Text(item.account_url != nil ? item.account_url! : "Nobody").font(.subheadline)
+            VStack(alignment: .leading) {
+                Text(photoItem.user.name).font(.subheadline)
+                Text("@\(photoItem.user.username)").font(.caption).foregroundColor(.gray)
+            }
             Spacer()
         }.padding(.leading, 10)
     }

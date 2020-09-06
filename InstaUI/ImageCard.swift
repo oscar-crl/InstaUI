@@ -14,16 +14,13 @@ struct ImageCard: View {
     
     @ObservedObject var imgCardController: ImageCardController
     
-    @ObservedObject var accountDetail: AccountDetailsController
+    @ObservedObject var appState = app
     
-    @ObservedObject var stateAppConfig = appConfig
+    var photoItem: PhotoModel
     
-    var imgItem: ItemsEntry
-    
-    init(item: ItemsEntry) {
-        imgCardController = item.type != nil ? ImageCardController(url: item.link!) : ImageCardController(url: item.images![0].link)
-        imgItem = item
-        accountDetail = item.account_url != nil ? AccountDetailsController(accountUrl: item.account_url!) : AccountDetailsController(accountUrl: appConfig.username)
+    init(item: PhotoModel) {
+        imgCardController = ImageCardController(url: item.urls.full!)
+        photoItem = item
     }
     
     @State var startPoint = UnitPoint(x: 0, y: 0)
@@ -33,11 +30,11 @@ struct ImageCard: View {
         HStack {
             if (imgCardController.imageCard != nil) {
                 ZStack {
-                    NavigationLink(destination: ImageDetail(item: self.imgItem, uiImage: self.imgCardController.imageCard!, accountDetail: self.accountDetail.accountDetail)) {
+                    NavigationLink(destination: ImageDetail(item: self.photoItem, image: self.imgCardController.imageCard!)) {
                         Image(uiImage: self.imgCardController.imageCard!).resizable().aspectRatio(contentMode: .fill)
                         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 400, maxHeight: 400, alignment: .center).clipped()
                     }.cornerRadius(20).padding(.horizontal, 30).zIndex(1)
-                    if (stateAppConfig.uiImproved) {
+                    if (appState.uiImproved) {
                         Image(uiImage: self.imgCardController.imageCard!).resizable().aspectRatio(contentMode: .fill)
                             .frame(minWidth: 0, maxWidth: .infinity, minHeight: 400, maxHeight: 400, alignment: .center)
                             .clipped().cornerRadius(20).offset(y: 15).blur(radius: 20).opacity(0.8)

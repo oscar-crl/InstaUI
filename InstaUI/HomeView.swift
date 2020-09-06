@@ -10,42 +10,37 @@ import SwiftUI
 import Foundation
 import Combine
 
-var appConfig = AppConfig()
+var app = AppConfig()
 
 struct HomeView: View {
     
-    @ObservedObject var galleryController = GalleryController()
+    @ObservedObject var photoController = PhotoController()
     
-    @State var isSelected = false
-    @State var page = 0
+    @State var page = 1
     
     init() {
-        galleryController.getGallery(url: "\(appConfig.apiEndpoint)gallery/t/\(appConfig.tags[appConfig.tagsIndex])/top/all/1", method: "GET")
+        photoController.getPhotos(url: "\(app.apiEndpoint)search/photos?page=\(page)&query=\(app.tags[app.tagsIndex])", method: "GET")
     }
 
     var body: some View {
         NavigationView {
             ScrollView(.vertical, showsIndicators: true) {
-                if (!galleryController.galleryList.isEmpty) {
-                    ForEach(galleryController.galleryList[page]) { imgItem in
-                        if ((imgItem.link != nil && (imgItem.type == Type.JPEG || imgItem.type == Type.PNG)) ||
-                            (imgItem.images != nil && (imgItem.images![0].type == Type.JPEG || imgItem.images![0].type == Type.PNG))) {
+                if (!photoController.photoList.isEmpty) {
+                    ForEach(photoController.photoList) { photoItem in
+                        VStack {
+                            ImageCard(item: photoItem)
                             VStack {
-                                ImageCard(item: imgItem)
-                                VStack {
-                                    HStack(spacing: 20) {
+                                HStack(spacing: 20) {
+                                    HStack(spacing: 5) {
                                         Image(systemName: "heart")
-                                        Image(systemName: "bubble.right")
-                                        Image(systemName: "paperplane")
-                                        Spacer()
-                                        Image(systemName: "bookmark")
-                                    }.padding(.bottom, 5)
-                                    HStack {
-                                        Text("\(imgItem.points) \(imgItem.points > 1 ? "points" : "point")").font(.caption)
-                                        Spacer()
+                                        Text("\(photoItem.likes)").font(.caption)
                                     }
-                                }.padding(.vertical, 20).padding(.horizontal, 30).font(.system(size: 22.0))
-                            }
+                                    Image(systemName: "bubble.right")
+                                    Image(systemName: "paperplane")
+                                    Spacer()
+                                    Image(systemName: "bookmark")
+                                }.padding(.bottom, 5)
+                            }.padding(.vertical, 20).padding(.horizontal, 30).font(.system(size: 22.0))
                         }
                     }.id(UUID())
                 } else {

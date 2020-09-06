@@ -11,9 +11,8 @@ import Foundation
 class AppConfig: ObservableObject {
     //MARK:- Static app info
     let username = "me"
-    let apiEndpoint = "https://api.imgur.com/3/"
-    let accessToken = "{{accesToken}}"
-    let clientID = "{{clientID}}"
+    let apiEndpoint = "https://api.unsplash.com/"
+    let accessToken = "{{unsplash_access_token}}"
     
     //MARK:- Global state app config
     @Published var uiImproved: Bool
